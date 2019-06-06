@@ -20,6 +20,6 @@ public class User {
     private String email;
 
     //JoinColumn은 외래키 주인에게만!
-    @OneToMany
-    private List<Board> board;
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards;
 }
