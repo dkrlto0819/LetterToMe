@@ -15,7 +15,7 @@ public class Board {
     private Integer board_id;
 
     @Column(name = "content")
-    private Text content;
+    private String content;
 
     @Column(name = "see_authority")
     private Boolean see_authority;
