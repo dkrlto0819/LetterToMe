@@ -10,8 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
 
     @Column(name="password")
     private String password;

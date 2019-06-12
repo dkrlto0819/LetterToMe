@@ -11,7 +11,7 @@ import java.sql.Date;
 public class Board {
     @Id
     @Column(name = "board_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer board_id;
 
     @Column(name = "content")

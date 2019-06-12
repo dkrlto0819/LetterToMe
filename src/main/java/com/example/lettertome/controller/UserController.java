@@ -5,6 +5,8 @@ import com.example.lettertome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController{
@@ -17,7 +19,7 @@ public class UserController{
     }
 
     @GetMapping
-    public void get(){
-
+    public List<User> get(){
+        return userService.list();
     }
 }
