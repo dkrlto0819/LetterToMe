@@ -9,6 +9,10 @@ import java.util.List;
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "number")
+    private Integer number;
+
     @Column(name = "id")
     private String id;
 

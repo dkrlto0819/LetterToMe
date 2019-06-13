@@ -23,11 +23,11 @@ public class UserController{
         return userService.list();
     }
 
-    @GetMapping("/{id}")
-    public User get(@PathVariable String id){return userService.get(id);}
+    @GetMapping("/{number}")
+    public User get(@PathVariable Integer number){return userService.get(number);}
 
     public void update(@RequestBody User user) {userService.update(user); }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {userService.delete(id); }
+    @DeleteMapping("/{number}")
+    public void delete(@PathVariable Integer number) {userService.delete(number); }
 }

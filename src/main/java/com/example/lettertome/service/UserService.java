@@ -22,12 +22,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User get(String id) {
+    public User get(Integer number) {
+       return userRepository.findById(number).orElse(null);
     }
 
     public void update(User user) {
+        userRepository.save(user);
     }
 
-    public void delete(String id) {
+    public void delete(Integer number) {
+        userRepository.deleteById(number);
     }
 }
