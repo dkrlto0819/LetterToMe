@@ -22,8 +22,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User get(Integer number) {
-       return userRepository.findById(number).orElse(null);
+    public User get(String id) {
+        return userRepository.findById(id).orElse(null);
+//       return userRepository.findById(number).orElse(null);
     }
 
     public void update(User user) {

@@ -13,13 +13,13 @@ public class LettertomeApplication {
         SpringApplication.run(LettertomeApplication.class, args);
     }
 
-    @Bean
-    public InternalResourceViewResolver setupViewResolver(){
-        InternalResourceViewResolver internalResourceViewResolver
-                = new InternalResourceViewResolver();
-        internalResourceViewResolver.setPrefix("/WEB-INF/views/");
-        internalResourceViewResolver.setSuffix(".html");
-        return internalResourceViewResolver;
-    }
+//    @Bean
+//    public InternalResourceViewResolver setupViewResolver(){
+//        InternalResourceViewResolver internalResourceViewResolver
+//                = new InternalResourceViewResolver();
+//        internalResourceViewResolver.setPrefix("/WEB-INF/views/");
+//        internalResourceViewResolver.setSuffix(".html");
+//        return internalResourceViewResolver;
+//    }
 
 }

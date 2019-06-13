@@ -14,7 +14,7 @@ public class UserController{
     private UserService userService;
 
     @PostMapping
-    public void create(@RequestBody User user){
+    public void create(User user){
         userService.create(user);
     }
 
@@ -23,8 +23,8 @@ public class UserController{
         return userService.list();
     }
 
-    @GetMapping("/{number}")
-    public User get(@PathVariable Integer number){return userService.get(number);}
+    @GetMapping("/{id}")
+    public User get(@PathVariable String id){return userService.get(id);}
 
     public void update(@RequestBody User user) {userService.update(user); }
 
