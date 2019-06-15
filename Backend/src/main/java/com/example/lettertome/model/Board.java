@@ -1,10 +1,14 @@
 package com.example.lettertome.model;
 
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
+import org.hibernate.annotations.CreationTimestamp;
 import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -21,10 +25,16 @@ public class Board {
     private Boolean see_authority;
 
     @Column(name = "open_date")
-    private Date open_date;
+    @CreationTimestamp
+    private LocalDateTime open_date;
+
+    @Column(name="created_date")
+    @CreationTimestamp
+    private LocalDateTime created_date;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
 
 }
