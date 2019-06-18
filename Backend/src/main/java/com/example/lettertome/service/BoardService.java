@@ -3,34 +3,37 @@ package com.example.lettertome.service;
 import com.example.lettertome.model.Board;
 import com.example.lettertome.model.User;
 import com.example.lettertome.repository.BoardRepository;
-import com.example.lettertome.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
-
-//    @Autowired
-//    private UserRepository userRepository;
 
     public void create(Board board) {
         boardRepository.save(board);
     }
 
     public List<Board> list(String user_id) {
-        List<Board> data= (List<Board>) boardRepository.findAll();
-        List<Board> result = new ArrayList<Board>();
+//        List<Board> data= (List<Board>) boardRepository.findAll();
+//        List<Board> result = new ArrayList<Board>();
 
-        for(Board b : data){
-            if(user_id.equals(b.getUser().getId()))
-                result.add(b);
-        }
-        return  result;
+
+//        for(Board b : data){
+//            if(user_id.equals(b.getUser().getId())) {
+//                result.add(b);
+//            }
+//        }
+//        return  result;
+        return boardRepository.findByUser_Id(user_id);
     }
 
     public Board get(Integer board_id) {
