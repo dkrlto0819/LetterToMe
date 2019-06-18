@@ -19,12 +19,21 @@ public class BoardController {
     }
 
     @GetMapping
-    public List<Board> get(){
-        return boardService.list();
+    public List<Board> getList(){
+        return boardService.alllist();
     }
+    //전체 게시물 확인용
 
-    @GetMapping("/{board_id}")
+    @GetMapping("/{user_id}")
+    public List<Board> get(@PathVariable String user_id){
+        return boardService.list(user_id);
+    }
+    //일치하는 user_id 로 가져오기, board.html로 가져올거
+
+    @GetMapping("/each/{board_id}")
     public Board get(@PathVariable Integer board_id){return boardService.get(board_id);}
+
+    //letter.html에서 쓸것
 
     public void update(@RequestBody Board board) {boardService.update(board); }
 
