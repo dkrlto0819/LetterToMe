@@ -43,10 +43,29 @@ public class UserController{
 
     }
 
+    @PostMapping("/signin")
+    public User signin(@RequestBody User user) {
+        String id = user.getId();
+        String password=user.getPassword();
+
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+        User newUser = new User();
+        newUser = userService.get(id);
+
+        if (newUser == null) {
+            return null;
+        } else if (id.equals(newUser.getId()) && password.equals(newUser.getPassword())) {
+            return user;
+        }else{
+            return null;
+        }
+    }
+
     @GetMapping
     public List<User> get(){
         return userService.list();
     }
+
 
     @GetMapping("/{id}")
     public User get(@PathVariable String id){return userService.get(id);}
