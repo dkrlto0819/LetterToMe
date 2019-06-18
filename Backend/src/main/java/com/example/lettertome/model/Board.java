@@ -32,7 +32,7 @@ public class Board {
     @CreationTimestamp
     private LocalDateTime created_date;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name="user_id")
     private User user;
 
