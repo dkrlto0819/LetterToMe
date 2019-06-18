@@ -8,7 +8,7 @@
     
             var formData ={
                 "id": $('#id').val(),
-                "password": $('#password').val(),
+                "password": $('#password').val()
             }
             console.log(JSON.stringify(formData))
             

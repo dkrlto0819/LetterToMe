@@ -61,6 +61,29 @@ public class UserController{
         }
     }
 
+    @PostMapping("/resetpassword")
+    public User resetpassword(@RequestBody User user) {
+        String id = user.getId();
+        String email=user.getEmail();
+
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+        User newUser = new User();
+        newUser = userService.get(id);
+
+        if (newUser == null) {
+            return null;
+        } else if (id.equals(newUser.getId()) && email.equals(newUser.getEmail())) {
+            newUser.setPassword("1234");
+            userService.update(newUser);
+            return user;
+        }else{
+            return null;
+        }
+    }
+
+
+
+
     @GetMapping
     public List<User> get(){
         return userService.list();
