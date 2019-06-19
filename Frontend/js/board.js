@@ -31,16 +31,38 @@ function add_row(jsonData) {
         create_date = row.insertCell(3);
         open_date = row.insertCell(4);
 
-        see.id="see"
+        see.id="see";
+        remove.id="remove";
+        title.id="title"
+
+
+        console.log(jsonData[i].see_authority);
 
         title.innerHTML = "<td>"+(jsonData[i].content).substring(0, 20)+"</td>"
         see.innerHTML = "<td>보기</td>"
         remove.innerHTML = "<td>삭제</td>"
         create_date.innerHTML = "<td>"+(jsonData[i].created_date).substring(0, 10)+"</td>"
-        open_date.innerHTML = "<td>"+(jsonData[i].open_date).substring(0, 10)+"</td>"
+        if(jsonData[i].d_day == 0){
+            title.style.color="#ff0000";
+            open_date.innerHTML = "<td>오늘</td>";
+        }else{
+            title.style.color="#000000";
+            if(jsonData[i].d_day > 0){
+                open_date.innerHTML = "<td>"+(jsonData[i].d_day)+"일</td>";
+            }else{
+                open_date.innerHTML = "<td>완료</td>"
+            }
+        }
     }
   }
 
   $(document).on("click","#see",function(event){
     window.location.replace('http://localhost:8000/write.html'); 
+  });
+
+  $(document).on("click","#remove",function(event){
+    var jbResult = confirm( '정말로 삭제하시겠습니까?' );
+        if(jbResult == true) {
+            alert("삭제했당!");
+        }
   });

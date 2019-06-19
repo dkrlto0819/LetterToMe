@@ -32,6 +32,9 @@ public class Board {
     @CreationTimestamp
     private LocalDateTime created_date;
 
+    @Column(name="d_day")
+    private Integer d_day;
+
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name="user_id")
     private User user;
