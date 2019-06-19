@@ -42,7 +42,7 @@ function make_table(){
         async: false,
         success : function(data) {
             if(data=="" || undefined || null){
-                alert("아이디와 비밀번호를 확인해주세요.");
+                alert("등록된 게시물이 없습니다.");
             }
             else{
                 console.log(data);
@@ -55,40 +55,27 @@ function make_table(){
     })
 }
 
+var title;
+var see;
+var remove;
+var create_date;
+var open_date;
+var boardDetail;
+
 function add_row(jsonData) {
-    var boardDetail = document.getElementById('board');
+    boardDetail = document.getElementById('board');
     for(var i in jsonData){
-        row = boardDetail.insertRow(boardDetail.rows.length);  //추가할 행
-
-        title = row.insertCell(0);  //실제 행 추가 여기서의 숫자는 컬럼 수
-        see = row.insertCell(1);
-        remove = row.insertCell(2);
-        create_date = row.insertCell(3);
-        open_date = row.insertCell(4);
-
-        see.className="see";
-      
-
-        remove.id="remove";
-        title.id="title"
-
-
-        console.log(jsonData[i].see_authority);
-
-        title.innerHTML = "<td>"+(jsonData[i].content).substring(0, 20)+"</td>"
-        
-        remove.innerHTML = "<td>삭제</td>"
-        create_date.innerHTML = "<td>"+(jsonData[i].created_date).substring(0, 10)+"</td>"
-
-        console.log(jsonData[i].board_id);
-        see.id=jsonData[i].board_id;
-        
-        see.innerHTML = "<td>보기</td>"
 
         if(jsonData[i].d_day == 0){
+            sameCode(jsonData, i);
             title.style.color="#ff0000";
             open_date.innerHTML = "<td>오늘</td>";
-        }else{
+        }
+    }
+
+    for(var i in jsonData){
+        if(jsonData[i].d_day != 0){
+            sameCode(jsonData, i);
             title.style.color="#000000";
             if(jsonData[i].d_day > 0){
                 see.disabled=true;
@@ -101,15 +88,54 @@ function add_row(jsonData) {
     }
   }
 
+  function sameCode(jsonData, i){
+    row = boardDetail.insertRow(boardDetail.rows.length);  //추가할 행
+
+    title = row.insertCell(0);  //실제 행 추가 여기서의 숫자는 컬럼 수
+    see = row.insertCell(1);
+    remove = row.insertCell(2);
+    create_date = row.insertCell(3);
+    open_date = row.insertCell(4);
+
+    see.className="see";
+    remove.className="remove";
+  
+
+    remove.id="remove";
+    title.id="title"
+
+
+    console.log(jsonData[i].see_authority);
+
+    title.innerHTML = "<td>"+(jsonData[i].content).substring(0, 20)+"</td>"
+    
+    remove.innerHTML = "<td>삭제</td>"
+    create_date.innerHTML = "<td>"+(jsonData[i].created_date).substring(0, 10)+"</td>"
+
+    console.log(jsonData[i].board_id);
+    see.id=jsonData[i].board_id;
+    remove.id=jsonData[i].board_id;
+    
+    see.innerHTML = "<td>보기</td>"
+  }
+
   $(document).on("click",".see",function(event){
     console.log($(this).attr('id'));
     localStorage.setItem("board_id", $(this).attr('id'));
     window.location.replace('http://localhost:8000/post.html'); 
   });
 
-  $(document).on("click","see",function(event){
+//   $(document).on("click","see",function(event){
+//     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
+//         if(jbResult == true) {
+//             alert("삭제했당!");
+//         }
+//   });
+
+  $(document).on("click","remove",function(event){
     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
         if(jbResult == true) {
             alert("삭제했당!");
         }
   });
+

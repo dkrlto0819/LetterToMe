@@ -4,6 +4,7 @@ import com.example.lettertome.controller.UserController;
 import com.example.lettertome.model.Board;
 import com.example.lettertome.model.User;
 import com.example.lettertome.repository.BoardRepository;
+import com.example.lettertome.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,7 +25,15 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public void create(Board board) {
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+        User user = new User();
+        user = userRepository.findById(board.getUser().getId()).orElse(null);
+        //user = userRepository.findById(board.getUser);
+        board.setUser(user);
         boardRepository.save(board);
     }
 
@@ -33,8 +42,6 @@ public class BoardService {
         List<Board> data= (List<Board>) boardRepository.findByUser_Id(user_id);
 
         Logger logger = LoggerFactory.getLogger(UserController.class);
-
-        logger.info("this is status : " + status);
 
         Boolean statusData = extractStatus(status);
 
@@ -45,16 +52,18 @@ public class BoardService {
             else
                 b.setSeeAuthority(false);
             ///(a, b) 중 b-a 인 것임
+
+            boardRepository.save(b);
         }
 
         if(statusData==false){
-            logger.info("all");
             data= (List<Board>) boardRepository.findByUser_Id(user_id);
         }else{
-            logger.info("only get");
             data= (List<Board>) boardRepository.findByUser_IdAndSeeAuthority(user_id, true);
             //완료된것만 보기
         }
+
+
 
         return data;
     }
@@ -65,9 +74,6 @@ public class BoardService {
         Boolean dataObject = (Boolean) jsonObject.get("show");
 
         Logger logger = LoggerFactory.getLogger(UserController.class);
-
-        logger.info("this is status json : " + dataObject);
-
         return dataObject;
     }
 

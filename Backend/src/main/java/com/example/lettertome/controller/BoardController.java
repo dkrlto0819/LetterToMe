@@ -32,9 +32,6 @@ public class BoardController {
     }
     //일치하는 user_id 로 가져오기, board.html로 가져올거
 
-
-//    @PostMapping("")
-
     @GetMapping("/each/{board_id}")
     public Board get(@PathVariable Integer board_id){return boardService.get(board_id);}
 
