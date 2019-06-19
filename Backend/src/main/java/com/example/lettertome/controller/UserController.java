@@ -47,7 +47,7 @@ public class UserController{
     }
 
     @PostMapping("/signin")
-    public User signin(@RequestBody User user) {
+    public String signin(@RequestBody User user) {
         String id = user.getId();
         String password=user.getPassword();
 
@@ -65,7 +65,7 @@ public class UserController{
                     .compact();
 
             logger.info("this is token : " + jwtString);
-            return user;
+            return jwtString;
         }else{
             return null;
         }

@@ -15,7 +15,8 @@
             $.ajax({
                 url : "http://localhost:9000/users/signin",
                 type : "POST",
-                data : JSON.stringify(formData), 
+                data : JSON.stringify(formData),
+                headers: {'Authorization': "1234"}, 
                 // dataType: 'json',
                 contentType : "application/json; charset=UTF-8",
                 async: false,
@@ -24,6 +25,7 @@
                         alert("아이디와 비밀번호를 확인해주세요.");
                     }
                     else{
+                        localStorage.setItem("token", data);
                         console.log(JSON.stringify(data));
                         window.location.replace('http://localhost:8000/board.html');
                     }
