@@ -47,7 +47,7 @@ public class UserController{
     }
 
     @PostMapping("/signin")
-    public String signin(@RequestBody User user) {
+    public User signin(@RequestBody User user) {
         String id = user.getId();
         String password=user.getPassword();
 
@@ -58,14 +58,14 @@ public class UserController{
         if (newUser == null) {
             return null;
         } else if (id.equals(newUser.getId()) && password.equals(newUser.getPassword())) {
-            String jwtString = Jwts.builder()
-                    //.setHeaderParam("id", user.getId())
-                    .setSubject(user.getId().toString())
-                    .signWith(SignatureAlgorithm.HS512, "aaaa")
-                    .compact();
-
-            logger.info("this is token : " + jwtString);
-            return jwtString;
+//            String jwtString = Jwts.builder()
+//                    //.setHeaderParam("id", user.getId())
+//                    .setSubject(user.getId().toString())
+//                    .signWith(SignatureAlgorithm.HS512, "aaaa")
+//                    .compact();
+//
+//            logger.info("this is token : " + jwtString);
+            return user;
         }else{
             return null;
         }

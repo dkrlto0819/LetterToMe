@@ -25,7 +25,7 @@
                         alert("아이디와 비밀번호를 확인해주세요.");
                     }
                     else{
-                        localStorage.setItem("token", data);
+                        localStorage.setItem("user_id", $('#id').val());
                         console.log(JSON.stringify(data));
                         window.location.replace('http://localhost:8000/board.html');
                     }
