@@ -2,6 +2,16 @@
 var show = false;
 $(document).ready(function(){
 
+    var logout = document.getElementById('logout');
+    logout.addEventListener('click', function(event){
+        var jbResult = confirm('정말 로그아웃 하시겠습니까?');
+        if(jbResult == true){
+            localStorage.removeItem("user_id");
+            localStorage.removeItem("user_number");
+            window.location.replace('http://localhost:8000/login.html');
+        }
+    })
+
     if(localStorage.getItem('board_id')){
         localStorage.removeItem('board_id');
     }
@@ -45,7 +55,6 @@ function make_table(){
                 alert("등록된 게시물이 없습니다.");
             }
             else{
-                console.log(data);
                 add_row(eval(data));
             }
         },
@@ -104,15 +113,11 @@ function add_row(jsonData) {
     remove.id="remove";
     title.id="title"
 
-
-    console.log(jsonData[i].see_authority);
-
     title.innerHTML = "<td>"+(jsonData[i].content).substring(0, 20)+"</td>"
     
     remove.innerHTML = "<td>삭제</td>"
     create_date.innerHTML = "<td>"+(jsonData[i].created_date).substring(0, 10)+"</td>"
 
-    console.log(jsonData[i].board_id);
     see.id=jsonData[i].board_id;
     remove.id=jsonData[i].board_id;
     
@@ -120,7 +125,6 @@ function add_row(jsonData) {
   }
 
   $(document).on("click",".see",function(event){
-    console.log($(this).attr('id'));
     localStorage.setItem("board_id", $(this).attr('id'));
     window.location.replace('http://localhost:8000/post.html'); 
   });
@@ -146,3 +150,4 @@ function add_row(jsonData) {
         }
   });
 
+  

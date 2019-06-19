@@ -10,7 +10,6 @@
                 "id": $('#id').val(),
                 "password": $('#password').val()
             }
-            console.log(JSON.stringify(formData))
             
             $.ajax({
                 url : "http://localhost:9000/users/signin",
@@ -25,8 +24,10 @@
                         alert("아이디와 비밀번호를 확인해주세요.");
                     }
                     else{
+                        jsonData = JSON.stringify(data);
+                        newData = JSON.parse(jsonData);
                         localStorage.setItem("user_id", $('#id').val());
-                        console.log(JSON.stringify(data));
+                        localStorage.setItem("user_number", newData.number);
                         window.location.replace('http://localhost:8000/board.html');
                     }
                 },

@@ -29,8 +29,6 @@ public class UserController{
 
     @PostMapping
     public void signup(@RequestBody User user){
-        Logger logger = LoggerFactory.getLogger(UserController.class);
-        logger.info("hello!");
         //logger.info("this is request : " + request.getParameter("id"));
 
 //        User user = new User();
@@ -38,7 +36,6 @@ public class UserController{
 //        user.setPassword(request.getParameter("password"));
 //        user.setEmail(request.getParameter("email"));
         try {
-
             userService.create(user);
         }catch (Exception e) {
             log.info("test" + e);
@@ -65,7 +62,7 @@ public class UserController{
 //                    .compact();
 //
 //            logger.info("this is token : " + jwtString);
-            return user;
+            return newUser;
         }else{
             return null;
         }
@@ -104,7 +101,13 @@ public class UserController{
     public User get(@PathVariable String id){return userService.get(id);}
 
     @PutMapping
-    public void update(@RequestBody User user) {userService.update(user); }
+    public User update(@RequestBody User user) {
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+        logger.info("is it okay?");
+        logger.info("this is update user : " + user);
+        return userService.update(user);
+    }
+
 
     @DeleteMapping("/{number}")
     public void delete(@PathVariable Integer number) {userService.delete(number); }

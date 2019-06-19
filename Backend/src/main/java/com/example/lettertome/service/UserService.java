@@ -37,8 +37,18 @@ public class UserService {
 //       return userRepository.findById(number).orElse(null);
     }
 
-    public void update(User user) {
-        userRepository.save(user);
+    public User update(User user) {
+        User numberUser = userRepository.findByNumber(user.getNumber()).orElse(null);
+        if(user.getPassword().equals(numberUser.getPassword())) {
+            if(!user.getNewpassword().equals("")) {
+                user.setPassword(user.getNewpassword());
+            }
+            user.setEmail(user.getEmail());
+            userRepository.save(user);
+            return user;
+        }else{
+            return null;
+        }
     }
 
     public void delete(Integer number) {

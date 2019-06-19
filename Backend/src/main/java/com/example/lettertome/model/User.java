@@ -14,7 +14,7 @@ public class User {
     @Column(name = "number")
     private Integer number;
 
-    @Column(name = "id")
+    @Column(name = "id", updatable = false)
     private String id;
 
     @Column(name="password")
@@ -22,6 +22,9 @@ public class User {
 
     @Column(name="email")
     private String email;
+
+    @Transient
+    private String newpassword;
 
     //JoinColumn은 외래키 주인에게만!
     //앵간하면 안 쓰는게 좋다고...???
