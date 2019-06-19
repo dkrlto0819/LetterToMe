@@ -1,12 +1,13 @@
 
-    var show = false;
+var show = false;
 $(document).ready(function(){
 
+    if(localStorage.getItem('board_id')){
+        localStorage.removeItem('board_id');
+    }
 
     var postcheck = document.getElementById('postcheck');
-
     make_table();
-
     postcheck.addEventListener('click', function(event){
 
         var boardDetail = document.getElementById('board');
@@ -30,8 +31,6 @@ function make_table(){
     var id = localStorage.getItem("user_id");
     var formData = {"show": show};
     var apiurl ='http://localhost:9000/boards/'+id;
-
-    // console.log(formData);
 
     $.ajax({
         url : apiurl,
@@ -67,7 +66,9 @@ function add_row(jsonData) {
         create_date = row.insertCell(3);
         open_date = row.insertCell(4);
 
-        see.id="see";
+        see.className="see";
+      
+
         remove.id="remove";
         title.id="title"
 
@@ -75,15 +76,23 @@ function add_row(jsonData) {
         console.log(jsonData[i].see_authority);
 
         title.innerHTML = "<td>"+(jsonData[i].content).substring(0, 20)+"</td>"
-        see.innerHTML = "<td>보기</td>"
+        
         remove.innerHTML = "<td>삭제</td>"
         create_date.innerHTML = "<td>"+(jsonData[i].created_date).substring(0, 10)+"</td>"
+
+        console.log(jsonData[i].board_id);
+        see.id=jsonData[i].board_id;
+        
+        see.innerHTML = "<td>보기</td>"
+
         if(jsonData[i].d_day == 0){
             title.style.color="#ff0000";
             open_date.innerHTML = "<td>오늘</td>";
         }else{
             title.style.color="#000000";
             if(jsonData[i].d_day > 0){
+                see.disabled=true;
+                see.style.color="#E6E6E6";
                 open_date.innerHTML = "<td>"+(jsonData[i].d_day)+"일</td>";
             }else{
                 open_date.innerHTML = "<td>완료</td>"
@@ -92,11 +101,13 @@ function add_row(jsonData) {
     }
   }
 
-  $(document).on("click","#see",function(event){
-    window.location.replace('http://localhost:8000/write.html'); 
+  $(document).on("click",".see",function(event){
+    console.log($(this).attr('id'));
+    localStorage.setItem("board_id", $(this).attr('id'));
+    window.location.replace('http://localhost:8000/post.html'); 
   });
 
-  $(document).on("click","#remove",function(event){
+  $(document).on("click","see",function(event){
     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
         if(jbResult == true) {
             alert("삭제했당!");

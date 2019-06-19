@@ -29,28 +29,9 @@ public class BoardService {
     }
 
     public List<Board> list(String user_id, String status) throws ParseException {
-//        if(status.equals("true")){
-//            //전체 보기
-//        }else{
-//            //완료된것만 보기
-//        }
-//        if(isAll) {
-//            data = boardRepository.findByUser_Id(user_id)
-//        } else {
-//            data = boardRepository.findByStatus(true)
-//        }
 
         List<Board> data= (List<Board>) boardRepository.findByUser_Id(user_id);
-//        List<Board> result = new ArrayList<Board>();
 
-
-//        for(Board b : data){
-//            if(user_id.equals(b.getUser().getId())) {
-//                result.add(b);
-//            }
-//        }
-//        return  result;
-//        int day = ChronoUnit.DAYS.between(board, today);
         Logger logger = LoggerFactory.getLogger(UserController.class);
 
         logger.info("this is status : " + status);

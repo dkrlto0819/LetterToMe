@@ -6,7 +6,7 @@ $(document).ready(function(){
     home.addEventListener('click', function(event){
         var jbResult = confirm( '나가시겠습니까?' );
         if(jbResult == true) {
-            window.location.replace('http://localhost:8000/board.html'); 
+            window.location.replace(document.referrer); 
         }
     })
 
