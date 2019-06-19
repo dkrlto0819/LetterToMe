@@ -132,10 +132,17 @@ function add_row(jsonData) {
 //         }
 //   });
 
-  $(document).on("click","remove",function(event){
+  $(document).on("click",".remove",function(event){
     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
         if(jbResult == true) {
-            alert("삭제했당!");
+            $.ajax({
+                url: "http://localhost:9000/boards/"+ $(this).attr('id'),
+                type: 'DELETE',
+                success: function(result){
+                    window.location.replace('http://localhost:8000/board.html'); 
+                    alert("삭제했당!");
+                }
+            }) 
         }
   });
 

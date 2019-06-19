@@ -25,7 +25,6 @@ public class Board {
     private Boolean seeAuthority;
 
     @Column(name = "open_date")
-    @CreationTimestamp
     private LocalDateTime open_date;
 
     @Column(name="created_date")

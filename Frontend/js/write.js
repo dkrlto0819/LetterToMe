@@ -3,6 +3,10 @@ $(document).ready(function(){
     var submit = document.getElementById('submit');
     var home = document.getElementById('home');
 
+    var seoul = new Date();
+    seoul.setHours(seoul.getHours()+9);
+    document.getElementById('date').value= seoul.toISOString().slice(0, 16);
+    
     home.addEventListener('click', function(event){
         var jbResult = confirm( '나가시겠습니까?' );
         if(jbResult == true) {
@@ -13,7 +17,7 @@ $(document).ready(function(){
     submit.addEventListener('click', function(event){
 
         var formData = {
-            "date": $('#date').val(),
+            "open_date": $('#date').val(),
             "content": $('#content').val(),
             "user": {
                 "id": localStorage.getItem('user_id')
