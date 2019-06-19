@@ -2,6 +2,8 @@ package com.example.lettertome.controller;
 
 import com.example.lettertome.model.User;
 import com.example.lettertome.service.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @CrossOrigin
@@ -55,6 +58,13 @@ public class UserController{
         if (newUser == null) {
             return null;
         } else if (id.equals(newUser.getId()) && password.equals(newUser.getPassword())) {
+            String jwtString = Jwts.builder()
+                    //.setHeaderParam("id", user.getId())
+                    .setSubject(user.getId().toString())
+                    .signWith(SignatureAlgorithm.HS512, "aaaa")
+                    .compact();
+
+            logger.info("this is token : " + jwtString);
             return user;
         }else{
             return null;
