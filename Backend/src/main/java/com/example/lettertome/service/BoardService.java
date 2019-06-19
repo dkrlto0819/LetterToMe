@@ -5,6 +5,9 @@ import com.example.lettertome.model.Board;
 import com.example.lettertome.model.User;
 import com.example.lettertome.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,12 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<Board> list(String user_id) {
+    public List<Board> list(String user_id, String status) throws ParseException {
+//        if(status.equals("true")){
+//            //전체 보기
+//        }else{
+//            //완료된것만 보기
+//        }
 //        if(isAll) {
 //            data = boardRepository.findByUser_Id(user_id)
 //        } else {
@@ -44,19 +52,44 @@ public class BoardService {
 //        return  result;
 //        int day = ChronoUnit.DAYS.between(board, today);
         Logger logger = LoggerFactory.getLogger(UserController.class);
+
+        logger.info("this is status : " + status);
+
+        Boolean statusData = extractStatus(status);
+
         for(Board b : data){
-            logger.info("this is open date : " + b.getOpen_date()
-                    + " this is create date : " + b.getCreated_date());
             b.setD_day((int) ChronoUnit.DAYS.between(LocalDate.now(), b.getOpen_date()));
             if(b.getD_day()<=0)
-                b.setSee_authority(true);
+                b.setSeeAuthority(true);
             else
-                b.setSee_authority(false);
+                b.setSeeAuthority(false);
             ///(a, b) 중 b-a 인 것임
+        }
+
+        if(statusData==false){
+            logger.info("all");
+            data= (List<Board>) boardRepository.findByUser_Id(user_id);
+        }else{
+            logger.info("only get");
+            data= (List<Board>) boardRepository.findByUser_IdAndSeeAuthority(user_id, true);
+            //완료된것만 보기
         }
 
         return data;
     }
+
+    private Boolean extractStatus(String status) throws ParseException {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(status);
+        Boolean dataObject = (Boolean) jsonObject.get("show");
+
+        Logger logger = LoggerFactory.getLogger(UserController.class);
+
+        logger.info("this is status json : " + dataObject);
+
+        return dataObject;
+    }
+
 
     public Board get(Integer board_id) {
         return boardRepository.findById(board_id).orElse(null);

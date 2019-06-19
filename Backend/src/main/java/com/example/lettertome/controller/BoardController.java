@@ -2,6 +2,7 @@ package com.example.lettertome.controller;
 
 import com.example.lettertome.model.Board;
 import com.example.lettertome.service.BoardService;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +26,9 @@ public class BoardController {
     }
     //전체 게시물 확인용
 
-    @GetMapping("/{user_id}")
-    public List<Board> get(@PathVariable String user_id){
-        return boardService.list(user_id);
+    @PostMapping("/{user_id}")
+    public List<Board> get(@PathVariable String user_id, @RequestBody String status) throws ParseException {
+        return boardService.list(user_id, status);
     }
     //일치하는 user_id 로 가져오기, board.html로 가져올거
 

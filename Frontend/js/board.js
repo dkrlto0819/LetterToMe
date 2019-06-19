@@ -1,24 +1,60 @@
 
+    var show = false;
 $(document).ready(function(){
-    
-    var id = localStorage.getItem("user_id");
 
-    var url ='http://localhost:9000/boards/'+id;
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.send();
+    var postcheck = document.getElementById('postcheck');
 
-    xhr.onreadystatechange = function (e) {
-    if (xhr.readyState !== XMLHttpRequest.DONE) return;
-        if(xhr.status === 200) { 
-            add_row(eval(xhr.responseText));
-            
-        } else {
-            alert("Error!");
+    make_table();
+
+    postcheck.addEventListener('click', function(event){
+
+        var boardDetail = document.getElementById('board');
+        row = boardDetail.insertRow(boardDetail.rows.length);  //추가할 행
+
+        for(var i in row){
+            $('tbody#board > tr:last').remove();
         }
-    };
+        if(postcheck.value=="받은 것만 보기"){
+            postcheck.value="전체보기";
+            show = true;
+        }else {
+            postcheck.value = "받은 것만 보기"
+            show = false;
+        }
+
+        make_table();
+    })   
 })
+function make_table(){
+    var id = localStorage.getItem("user_id");
+    var formData = {"show": show};
+    var apiurl ='http://localhost:9000/boards/'+id;
+
+    // console.log(formData);
+
+    $.ajax({
+        url : apiurl,
+        type : "POST",
+        data : JSON.stringify(formData),
+        // headers: {'Authorization': "1234"}, 
+        // dataType: 'json',
+        contentType : "application/json; charset=UTF-8",
+        async: false,
+        success : function(data) {
+            if(data=="" || undefined || null){
+                alert("아이디와 비밀번호를 확인해주세요.");
+            }
+            else{
+                console.log(data);
+                add_row(eval(data));
+            }
+        },
+        error : function(xhr, status, error) {
+            alert("에러발생");
+        }
+    })
+}
 
 function add_row(jsonData) {
     var boardDetail = document.getElementById('board');

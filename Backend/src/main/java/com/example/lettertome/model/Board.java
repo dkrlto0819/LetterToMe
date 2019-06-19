@@ -22,7 +22,7 @@ public class Board {
     private String content;
 
     @Column(name = "see_authority")
-    private Boolean see_authority;
+    private Boolean seeAuthority;
 
     @Column(name = "open_date")
     @CreationTimestamp
