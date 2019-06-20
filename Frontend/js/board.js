@@ -4,11 +4,13 @@ $(document).ready(function(){
 
     var logout = document.getElementById('logout');
     logout.addEventListener('click', function(event){
+        
         var jbResult = confirm('정말 로그아웃 하시겠습니까?');
         if(jbResult == true){
             localStorage.removeItem("user_id");
             localStorage.removeItem("user_number");
             window.location.replace('http://localhost:8000/login.html');
+        
         }
     })
 
@@ -129,12 +131,6 @@ function add_row(jsonData) {
     window.location.replace('http://localhost:8000/post.html'); 
   });
 
-//   $(document).on("click","see",function(event){
-//     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
-//         if(jbResult == true) {
-//             alert("삭제했당!");
-//         }
-//   });
 
   $(document).on("click",".remove",function(event){
     var jbResult = confirm( '정말로 삭제하시겠습니까?' );
