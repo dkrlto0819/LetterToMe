@@ -81,7 +81,7 @@ public class UserController{
             return null;
         } else if (id.equals(newUser.getId()) && email.equals(newUser.getEmail())) {
             newUser.setPassword("1234");
-            userService.update(newUser);
+            userService.resetPassword(newUser);
             return user;
         }else{
             return null;

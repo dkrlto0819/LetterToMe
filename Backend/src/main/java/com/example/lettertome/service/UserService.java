@@ -37,6 +37,10 @@ public class UserService {
 //       return userRepository.findById(number).orElse(null);
     }
 
+    public User resetPassword(User user){
+        return userRepository.save(user);
+    }
+
     public User update(User user) {
         User numberUser = userRepository.findByNumber(user.getNumber()).orElse(null);
         if(user.getPassword().equals(numberUser.getPassword())) {

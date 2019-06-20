@@ -14,7 +14,7 @@ $(document).ready(function() {
             var date = document.getElementById('date');
             var content = document.getElementById('content');
 
-            date.value = (data.open_date);
+            date.value = (data.open_date).substring(0, 10);
             content.value = (data.content);
         } else {
             alert("Error!");
